@@ -1,8 +1,8 @@
-Algoritmos
-==========
+# Algoritmos
+---
 
-Algoritmo para el XORer
------------------------
+## Algoritmo para el XORer
+---
 
 __Padre__
 
@@ -33,7 +33,7 @@ __Hijos__
 3. cerrar ambos FILE\*
 4. terminar
 
-Algoritmo para el JOINer
-------------------------
+## Algoritmo para el JOINer
+---
 
 ...
