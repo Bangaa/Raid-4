@@ -1,6 +1,6 @@
 # Algoritmos
 
->## Algoritmo para el XORer
+## Algoritmo para el XORer
 ---
 
 __Padre__
@@ -42,7 +42,7 @@ Dicho esto, el algoritmo es:
 3. cerrar ambos FILE\*
 4. terminar
 
->## Algoritmo para el JOINer
+## Algoritmo para el JOINer
 ---
 
 ...
