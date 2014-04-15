@@ -3,7 +3,7 @@
 ## Algoritmo para el XORer
 ---
 
-__Padre__
+### Padre
 
 Una vez dados las _P_ partes en las que se dividira el archivo de entrada.
 
@@ -16,7 +16,7 @@ Una vez dados las _P_ partes en las que se dividira el archivo de entrada.
 	* (Se deben pasar a este hijo como argumento: el nombre del archivo a dividir junto con los descriptores de los pipes de los hermanos, y el numero de proceso)
 3. Esperar a que los hijos terminen de hacer lo que tengan que hacer
 
-__Hijos__
+### Hijos
 
 Se deben definir unas cuantas cosas antes.
 
