@@ -20,10 +20,10 @@ __Hijos__
 
 Se deben definir unas cuantas cosas antes.
 
- * pipeOUT son los pipes de comunicacion de salida, es decir, cualquier informacion que el proceso quiera
+ * __pipeOUT__ son los pipes de comunicacion de salida, es decir, cualquier informacion que el proceso quiera
  comunicar a sus hermanos debe ser por ahi. Estos pipes se dividen en izquierdo y derecho, en el cual se 
  deben mandar la confirmacion de lectura y los bytes que se han leido del archivo de entrada respectivamente.
- * pipeIN son los pipes de entrada, de los cuales el izquierdo es por donde el proceso recibe los bytes leidos
+ * __pipeIN__ son los pipes de entrada, de los cuales el izquierdo es por donde el proceso recibe los bytes leidos
  de su hermano izquierdo y el derecho es por donde recibe el mensaje de confirmacion de lectura de sus hermano
  derecho.
 
