@@ -1,7 +1,6 @@
 # Algoritmos
----
 
-## Algoritmo para el XORer
+>## Algoritmo para el XORer
 ---
 
 __Padre__
@@ -19,6 +18,16 @@ Una vez dados las _P_ partes en las que se dividira el archivo de entrada.
 
 __Hijos__
 
+Se deben definir unas cuantas cosas antes.  
+- pipeOUT son los pipes de comunicacion de salida, es decir, cualquier informacion que el proceso quiera
+comunicar a sus hermanos debe ser por ahi. Estos pipes se dividen en izquierdo y derecho, en el cual se 
+deben mandar la confirmacion de lectura y los bytes que se han leido del archivo de entrada respectivamente.
+- pipeIN son los pipes de entrada, de los cuales el izquierdo es por donde el proceso recibe los bytes leidos
+de su hermano izquierdo y el derecho es por donde recibe el mensaje de confirmacion de lectura de sus hermano
+derecho.
+
+Dicho esto, el algoritmo es:  
+
 1. Se debe crear un FILE\* para lectura y otro para escritura.
 2. Mientras no lea todo mi bloque asignado hacer:
 	* leer 100 bytes del bloque
@@ -33,7 +42,7 @@ __Hijos__
 3. cerrar ambos FILE\*
 4. terminar
 
-## Algoritmo para el JOINer
+>## Algoritmo para el JOINer
 ---
 
 ...
