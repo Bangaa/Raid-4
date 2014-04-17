@@ -21,3 +21,12 @@ typedef struct
  */
 com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r);
 
+int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes );
+
+/**
+ * Rellena con ceros los espacios de la memoria no ocupados.
+ * @param ptr Es el puntero al espacio de memoria que queremos blanquear
+ * @param wspaces Son los espacios que si estamos ocupando en bytes.
+ * @param lenght Es el tamanio de la memoria en bytes
+ */
+void blanquear(void* ptr, int wspaces, int lenght);
