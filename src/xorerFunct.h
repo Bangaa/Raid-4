@@ -44,3 +44,16 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
  * @param lenght Es el tamanio de la memoria en bytes
  */
 void blanquear(void* ptr, int wspaces, int lenght);
+
+/**
+ * Ejecuta la operacion binaria XOR. 
+ * Hace un xor entre el contenido de dos bloques de memoria guardando el
+ * resultado en el primer puntero - sobreescribe el primer puntero -. Hay
+ * que tener en cuenta que los dos espacios de memoria deben ser del mismo
+ * tamaño, o si no puede arrojar un error de violacion de segmento.
+ *
+ * @param ptr1 Es el primer puntero y es donde se guardara el XOR
+ * @param ptr2 Es el segundo puntero.
+ * @param lenght Es el largo en bytes de los bloques de memoria.
+ */
+void xor_(void* ptr1, void* ptr2, int lenght);
