@@ -1,3 +1,5 @@
+#define TASA 2000
+
 /**
  * Estructura que encapsula los pipes.
  */
@@ -5,7 +7,7 @@ typedef struct
 {
 	int left_in, left_out;		//< pipes hacia el proceso hermano izquierdo
 	int right_in, right_out;	//< pipes hacia el proceso hermano derecho
-}com_p;
+}com_p; 
 
 /**
  * Funcion que genera un nueva estructura com_p que tendra encapsulados

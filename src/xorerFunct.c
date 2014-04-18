@@ -5,7 +5,6 @@
 #include "misc.h"
 #include <string.h>
 
-#define TASA 2000
 
 com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r)
 {
