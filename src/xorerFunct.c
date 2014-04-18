@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "xorerFunct.h"
+#include "misc.h"
 #include <string.h>
 
 #define TASA 2000
 
 com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r)
 {
-	com_p* pipes = (com_p) malloc(sizeof(com_p));
+	com_p* pipes = (com_p*) malloc(sizeof(com_p));
 
 	pipes->left_in = p_in_l;
 	pipes->left_out = p_out_l;
@@ -86,16 +88,21 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 
 void xor_(void* ptr1, void* ptr2, int lenght)
 {
+	char* cpptr1 = ptr1;
+	char* cpptr2 = ptr2;
+
 	for (int i=0; i < lenght; i++)
 	{
-		ptr1[i] = ptr1[i] ^ ptr2[i]; 
+		cpptr1[i] = cpptr1[i] ^ cpptr2[i]; 
 	}
 }
 
 void blanquear(void* ptr, int wspaces, int lenght)
 {
+	char* cpptr = ptr;
+
 	for (int i=wspaces+1; i<lenght; i++)
 	{
-		ptr[i] = 0;
+		cpptr[i] = 0;
 	}
 }
