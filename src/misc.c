@@ -4,6 +4,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "misc.h"
 
 char * inttostring(int num)
@@ -29,6 +30,25 @@ char * inttostring(int num)
 	str[cuantos]=0;
 
 	return str; 
+}
+
+long fsof(FILE * ptrFILE)
+{
+	long size;
+	long current;
+
+	if (ptrFILE == NULL)
+	{
+		return -1;
+	}
+
+	current = ftell(ptrFILE);
+
+	fseek(ptrFILE, 0, SEEK_END);
+	size = ftell(ptrFILE);
+	fseek(ptrFILE, current, SEEK_SET);
+
+	return size; 
 }
 
 
