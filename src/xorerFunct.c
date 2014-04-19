@@ -47,29 +47,25 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	while (bytes_left > 0)
 	{
 		rdbytes_f = rdbytes_p = 0;
-
 		if (!feof(file_in)) // respaldo
 		{ 
 			if (bytes_left >= TASA)
 			{
 				rdbytes_f = fread(data_f, 1, TASA, file_in);
-				bytes_left -= rdbytes_f;
 			}
 			else if (bytes_left < TASA)
 			{
 				rdbytes_f = fread(data_f, 1, bytes_left, file_in);
-				bytes_left -= rdbytes_f;
 			}
 
-			fwrite(data_f, 1, rdbytes_f, file_out);
+			int aux = fwrite(data_f, 1, rdbytes_f, file_out);
 		}
 
-		if (pipes->left_in != -1)	// pueden haber problemas con este bloque, revisar luego
+		if (pipes->left_in != -1)
 		{
 			rdbytes_p = read(pipes->left_in, data_p, TASA);
 			write(pipes->left_out, "1", 2);
 		}
-
 
 		blanquear(data_f, rdbytes_f, TASA);
 		blanquear(data_p, rdbytes_p, TASA);
@@ -80,12 +76,22 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 		int cuantos = (rdbytes_p >rdbytes_f ? rdbytes_p:rdbytes_f);
 
 		write(pipes->right_out, data_f, cuantos);
-		read(pipes->right_in, trash, 2);
+		
+		bytes_left -= cuantos;
+
+		if(bytes_left<=0){//no espera confirmación al enviar el último pack de datos.
+			break;
+		}
+		else
+		{
+			read(pipes->right_in, trash, 2);
+		}
 
 	} 
 
 	free(data_f);
 	free(data_p);
+
 	fclose(file_in);
 	fclose(file_out);
 
