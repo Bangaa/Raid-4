@@ -20,10 +20,6 @@ com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r)
 
 int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 {
-	printf("%d: Mis pipes\n", n_proc); //DEBUG
-	printf("%d: \tR\tW\n", n_proc); //DEBUG
-	printf("%d: l|\t%d\t%d \n", n_proc, pipes->left_in, pipes->left_out); //DEBUG
-	printf("%d: r|\t%d\t%d \n", n_proc, pipes->right_in, pipes->right_out); //DEBUG
 	FILE* file_in, *file_out;	//< Archivo de entrada y salida
 	void* data_f;				//< Bytes leidos del archivo
 	void* data_p;				//< Bytes leidos del pipe
@@ -54,7 +50,6 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 
 		if (!feof(file_in)) // respaldo
 		{ 
-			printf("%d: voy a leer de archivo\n", n_proc); //DEBUG
 			if (bytes_left >= TASA)
 			{
 				rdbytes_f = fread(data_f, 1, TASA, file_in);
@@ -65,44 +60,34 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 				rdbytes_f = fread(data_f, 1, bytes_left, file_in);
 				bytes_left -= rdbytes_f;
 			}
-			printf("%d: voy a escribir a archivo\n", n_proc); //DEBUG
 
 			fwrite(data_f, 1, rdbytes_f, file_out);
 		}
 
 		if (pipes->left_in != -1)	// pueden haber problemas con este bloque, revisar luego
 		{
-			printf("%d: voy a leer del pipe %d...\n", n_proc, pipes->left_in); //DEBUG
 			rdbytes_p = read(pipes->left_in, data_p, TASA);
-			printf("%d: pipe leido\n", n_proc); //DEBUG
-			printf("%d: enviando confirmacion a pipe %d...\n", n_proc, pipes->left_out); //DEBUG
 			write(pipes->left_out, "1", 2);
-			printf("%d: confirmacion enviada\n", n_proc); //DEBUG
 		}
 
 
 		blanquear(data_f, rdbytes_f, TASA);
 		blanquear(data_p, rdbytes_p, TASA);
 
-		printf("%d: voy a hacer el xor...\n", n_proc); //DEBUG
 		xor_(data_f, data_p, TASA);
-		printf("%d: xor hecho\n", n_proc); //DEBUG
 
 		char trash[2];
 		int cuantos = (rdbytes_p >rdbytes_f ? rdbytes_p:rdbytes_f);
 
-		printf("%d: enviando datos por pipe %d...\n", n_proc, pipes->right_out); //DEBUG
 		write(pipes->right_out, data_f, cuantos);
-		printf("%d: datos enviados \n", n_proc); //DEBUG
-		printf("%d: voy a leer confirmacion de envio del pipe %i...\n", n_proc, pipes->right_in); //DEBUG
 		read(pipes->right_in, trash, 2);
-		printf("%d: confirmacion leida\n", n_proc); //DEBUG
 
 	} 
-	printf("%d: listo\n", n_proc); //DEBUG
 
 	free(data_f);
 	free(data_p);
+	fclose(file_in);
+	fclose(file_out);
 
 	return 0;
 }
@@ -147,20 +132,14 @@ int crear_xor(char fname[], long nbytes, int left_in, int left_out)
 	{
 		int rdbytes_p;
 
-		printf("P: voy a leer del pipe %d...\n", left_in);	//DEBUG
 		rdbytes_p = read(left_in, data_p, TASA);
-		printf("P: pipe leido %d bytes\n", rdbytes_p);	//DEBUG
-		printf("P: voy a escribir confirmacion ...\n");	//DEBUG
 		write(left_out, "1", 2);
-		printf("P: confirmacion enviada\n");	//DEBUG
 		
 		bytes_left-= rdbytes_p;
 		
-		printf("P: voy a escribir en archivo\n");	//DEBUG
 		fwrite(data_p, 1, rdbytes_p, fout);
 
 	}
-	printf("P: listo\n");	//DEBUG
 	fclose(fout);
 
 	return 0;
