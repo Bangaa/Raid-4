@@ -27,9 +27,6 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	int rdbytes_f, rdbytes_p;	//< Numero de bytes leidos del archivo y pipe
 	char* foutname = (char*) malloc(strlen(fname)+6);
 
-	foutname = strcat(fname, "part");
-	foutname = strcat(fname, inttostring(n_proc));
-
 	if ((file_in = fopen(fname, "r")) == NULL)
 		return 1;		// No existe fichero
 
@@ -38,6 +35,9 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 
 	if ((data_f = malloc(TASA)) == NULL)
 		return 1;		// No hay espacio en memoria
+
+	foutname = strcat(fname, "part");
+	foutname = strcat(fname, inttostring(n_proc));
 
 	file_out = fopen(foutname, "w");
 
