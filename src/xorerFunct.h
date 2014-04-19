@@ -59,3 +59,13 @@ void blanquear(void* ptr, int wspaces, int lenght);
  * @param lenght Es el largo en bytes de los bloques de memoria.
  */
 void xor_(void* ptr1, void* ptr2, int lenght);
+
+/**
+ * Funcion que hace el trabajo del padre. Es decir, crea el .XOR para luego
+ * poder unir las partes denuevo.
+ *
+ * @param fname Es el nombre del fichero
+ * @param left_in Es el descriptor del pipe de entrada
+ * @param left_out Es el descriptor del pipe de confirmacion
+ */
+int crear_xor(char fname[], long nbytes, int left_in, int left_out);

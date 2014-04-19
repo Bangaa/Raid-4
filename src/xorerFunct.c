@@ -36,7 +36,7 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	if ((data_f = malloc(TASA)) == NULL)
 		return 1;		// No hay espacio en memoria
 
-	foutname = strcat(fname, "part");
+	foutname = strcat(fname, ".part");
 	foutname = strcat(fname, inttostring(n_proc));
 
 	file_out = fopen(foutname, "w");
@@ -104,4 +104,36 @@ void blanquear(void* ptr, int wspaces, int lenght)
 	{
 		cpptr[i] = 0;
 	}
+}
+
+int crear_xor(char fname[], long nbytes, int left_in, int left_out)
+{
+	FILE* fout;
+	long bytes_left = nbytes;
+	char* fout_name;
+	void* data_p;
+
+	fout_name = strcat(fname, ".XOR");
+
+	if ((fout = fopen(fout_name, "w")) == NULL)
+		return 1;
+
+	if ((data_p = malloc(TASA)) == NULL)
+		return 1;
+
+	while (bytes_left > 0)
+	{
+		int rdbytes_p;
+
+		write(left_out, "1", 2);
+		rdbytes_p = read(left_in, data_p, TASA);
+		
+		bytes_left-= rdbytes_p;
+		
+		fwrite(data_p, 1, rdbytes_p, fout);
+
+	}
+	fclose(fout);
+
+	return 0;
 }

@@ -9,27 +9,11 @@
 
 char * inttostring(int num)
 {
-	char cuantos = 0;
-	char * str;
-	int left = num;
+	char* buff = (char*) malloc (sizeof(char)*5);
 
-	while (left!=0)
-	{
-		left = left/10;
-		cuantos++;
-	}
+	sprintf(buff, "%i", num);
 
-	if ((str = (char*)malloc(cuantos+1)) == NULL)
-		return NULL;
-
-	for (int i=cuantos-1; i>=0; i--)
-	{
-		str[i] = BASE_ASCII + num%10;
-		num/= 10;
-	}
-	str[cuantos]=0;
-
-	return str; 
+	return buff; 
 }
 
 long fsof(FILE * ptrFILE)
