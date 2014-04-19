@@ -9,7 +9,7 @@
 #define _RD 0
 #define _WR 1
 
-#define P 4
+#define P 3
 
 int main (int argc, char* argv[])
 {
@@ -33,6 +33,9 @@ int main (int argc, char* argv[])
 	{
 		fsize = fsof(ptrFile);
 		nbytes = fsize/P;
+		if((fsize % P)!=0){// si no es división exacta, le da un byte más.
+			nbytes++;
+		}
 	}
 	else
 	{
@@ -81,7 +84,7 @@ int main (int argc, char* argv[])
 					break;
 
 			}
-			printf("Hijo %d creado \n", i);
+			printf("Hijo %d creado \n", i+1);
 
 			int ok = comunicar(fname, i+1, i*nbytes, nbytes, pipesHijo);
 
@@ -105,8 +108,10 @@ int main (int argc, char* argv[])
 	{
 		printf("Hubieron problemas\n");
 	} 
-
+	/*
+	printf("Esperando último hijo...\n");
 	waitpid(pid, NULL, 1);
-
+	printf("Último hijo terminado.\n");
+	*/
 	return 0;
 }

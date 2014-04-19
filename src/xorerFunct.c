@@ -62,12 +62,15 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 			}
 			else if (bytes_left < TASA)
 			{
+				printf("%d:############################################\n",n_proc);
 				rdbytes_f = fread(data_f, 1, bytes_left, file_in);
 				bytes_left -= rdbytes_f;
 			}
+			printf("%d: lei: %d\n", n_proc, rdbytes_f); //DEBUG
 			printf("%d: voy a escribir a archivo\n", n_proc); //DEBUG
 
 			fwrite(data_f, 1, rdbytes_f, file_out);
+			printf("%d: escribi archivo\n", n_proc); //DEBUG
 		}
 
 		if (pipes->left_in != -1)	// pueden haber problemas con este bloque, revisar luego
@@ -94,6 +97,9 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 		printf("%d: enviando datos por pipe %d...\n", n_proc, pipes->right_out); //DEBUG
 		write(pipes->right_out, data_f, cuantos);
 		printf("%d: datos enviados \n", n_proc); //DEBUG
+		if(bytes_left==0){//no espera confirmación al enviar el último pack de datos.
+			break;
+		}
 		printf("%d: voy a leer confirmacion de envio del pipe %i...\n", n_proc, pipes->right_in); //DEBUG
 		read(pipes->right_in, trash, 2);
 		printf("%d: confirmacion leida\n", n_proc); //DEBUG
@@ -101,6 +107,8 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	} 
 	printf("%d: listo\n", n_proc); //DEBUG
 
+	fclose(file_out);
+	fclose(file_in);
 	free(data_f);
 	free(data_p);
 

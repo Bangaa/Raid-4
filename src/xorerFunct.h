@@ -1,4 +1,4 @@
-#define TASA 2000
+#define TASA 400
 
 /**
  * Estructura que encapsula los pipes.
