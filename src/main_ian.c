@@ -9,7 +9,7 @@
 #define _RD 0
 #define _WR 1
 
-#define P 3
+#define P 2
 
 int main (int argc, char* argv[])
 {

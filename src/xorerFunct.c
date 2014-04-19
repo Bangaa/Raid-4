@@ -51,26 +51,27 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	while (bytes_left > 0)
 	{
 		rdbytes_f = rdbytes_p = 0;
-
+		printf("%d:while...\n",n_proc);
 		if (!feof(file_in)) // respaldo
 		{ 
+			printf("%d:if(feof)\n",n_proc);
 			printf("%d: voy a leer de archivo\n", n_proc); //DEBUG
 			if (bytes_left >= TASA)
 			{
 				rdbytes_f = fread(data_f, 1, TASA, file_in);
-				bytes_left -= rdbytes_f;
+				//bytes_left -= rdbytes_f;
 			}
 			else if (bytes_left < TASA)
 			{
 				printf("%d:############################################\n",n_proc);
 				rdbytes_f = fread(data_f, 1, bytes_left, file_in);
-				bytes_left -= rdbytes_f;
+				//bytes_left -= rdbytes_f;
 			}
 			printf("%d: lei: %d\n", n_proc, rdbytes_f); //DEBUG
 			printf("%d: voy a escribir a archivo\n", n_proc); //DEBUG
 
-			fwrite(data_f, 1, rdbytes_f, file_out);
-			printf("%d: escribi archivo\n", n_proc); //DEBUG
+			int aux = fwrite(data_f, 1, rdbytes_f, file_out);
+			printf("%d: escribi archivo (aux:%d)\n", n_proc,aux); //DEBUG
 		}
 
 		if (pipes->left_in != -1)	// pueden haber problemas con este bloque, revisar luego
@@ -83,9 +84,10 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 			printf("%d: confirmacion enviada\n", n_proc); //DEBUG
 		}
 
-
+		printf("%d:blanquear...\n", n_proc);
 		blanquear(data_f, rdbytes_f, TASA);
 		blanquear(data_p, rdbytes_p, TASA);
+		printf("%d:blanqueado.\n", n_proc);
 
 		printf("%d: voy a hacer el xor...\n", n_proc); //DEBUG
 		xor_(data_f, data_p, TASA);
@@ -97,7 +99,10 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 		printf("%d: enviando datos por pipe %d...\n", n_proc, pipes->right_out); //DEBUG
 		write(pipes->right_out, data_f, cuantos);
 		printf("%d: datos enviados \n", n_proc); //DEBUG
-		if(bytes_left==0){//no espera confirmación al enviar el último pack de datos.
+		
+		bytes_left -= cuantos;
+		if(bytes_left<=0){//no espera confirmación al enviar el último pack de datos.
+			printf("%d:if(bytes_left==0\n",n_proc);
 			break;
 		}
 		printf("%d: voy a leer confirmacion de envio del pipe %i...\n", n_proc, pipes->right_in); //DEBUG
@@ -107,11 +112,13 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	} 
 	printf("%d: listo\n", n_proc); //DEBUG
 
+	printf("%d:CERRANDO ARCHIVOS\n",n_proc);
 	fclose(file_out);
 	fclose(file_in);
+	printf("%d:ARCHIVOS CERRADOS\n", n_proc);
 	free(data_f);
 	free(data_p);
-
+	printf("%d:FREE DATAs\n", n_proc);
 	return 0;
 }
 
