@@ -63,8 +63,8 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 
 		if (pipes->left_in != -1)	// pueden haber problemas con este bloque, revisar luego
 		{
-			rdbytes_p = read(pipes->left_in, data_p, TASA);
 			write(pipes->left_out, "1", 2);
+			rdbytes_p = read(pipes->left_in, data_p, TASA);
 		}
 
 		blanquear(data_f, rdbytes_f, TASA);
