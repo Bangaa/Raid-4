@@ -1,4 +1,3 @@
-#define BASE_ASCII ((int)'0') //<! Valor ASCII del 0 
 
 /**
  * Funcion que transforma un entero en un string.
