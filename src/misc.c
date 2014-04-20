@@ -9,9 +9,10 @@
 
 char * inttostring(int num)
 {
-	char* buff = (char*) malloc (sizeof(char)*5);
+	char* buff = (char*) malloc (sizeof(char)*10);
 
 	sprintf(buff, "%i", num);
+	buff[9]='\0';
 
 	return buff; 
 }

@@ -25,7 +25,7 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	void* data_p;				//< Bytes leidos del pipe
 	long bytes_left = nbytes;	//< Bytes que me quedan por leer
 	int rdbytes_f, rdbytes_p;	//< Numero de bytes leidos del archivo y pipe
-	char* foutname = (char*) malloc(strlen(fname)+6);
+	char* foutname = (char*) malloc(strlen(fname)+10);
 
 	if ((file_in = fopen(fname, "r")) == NULL)
 		return 1;		// No existe fichero
@@ -39,8 +39,10 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 	if ((data_p = malloc(TASA)) == NULL)
 		return 1;		// No hay espacio en memoria
 
-	foutname = strcat(fname, ".part");
-	foutname = strcat(fname, inttostring(n_proc));
+
+	strcpy(foutname, fname);
+	strcat(foutname, ".part");
+	strcat(foutname, inttostring(n_proc));
 
 	file_out = fopen(foutname, "w");
 
@@ -123,12 +125,13 @@ int crear_xor(char fname[], long nbytes, int left_in, int left_out)
 {
 	FILE* fout;
 	long bytes_left = nbytes;
-	char* fout_name;
+	char* foutname = (char*) malloc(strlen(fname)+5);
 	void* data_p;
 
-	fout_name = strcat(fname, ".XOR");
+	strcpy(foutname, fname);
+	strcat(foutname, ".XOR");
 
-	if ((fout = fopen(fout_name, "w")) == NULL)
+	if ((fout = fopen(foutname, "w")) == NULL)
 		return 1;
 
 	if ((data_p = malloc(TASA)) == NULL)
@@ -143,8 +146,7 @@ int crear_xor(char fname[], long nbytes, int left_in, int left_out)
 		
 		bytes_left-= rdbytes_p;
 		
-		fwrite(data_p, 1, rdbytes_p, fout);
-
+		fwrite(data_p, 1, rdbytes_p, fout); 
 	}
 	fclose(fout);
 

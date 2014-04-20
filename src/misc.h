@@ -1,6 +1,11 @@
 
 /**
- * Funcion que transforma un entero en un string.
+ * Funcion que transforma un entero de hasta 9 digitos en un string.
+ * CUIDADO!: Esta funcion reserva memoria necesaria para poder transformar
+ * transformar el entero a string que va dependiendo del la cantidad de 
+ * digitos que tenga el numero, por lo tanto, no debe usar esta funcion dentro
+ * de un ciclo sin usar referencias puesto que no podra liberar la memoria
+ * reservada.
  * @param num Es el entero que se transformara
  * @return El string terminado en caracter NULL que represente al entero
  */
