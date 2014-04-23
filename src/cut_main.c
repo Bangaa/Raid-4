@@ -77,7 +77,7 @@ int main (int argc, char* argv[])
 
 			}
 
-			int ok = comunicar(fname, i+1, i*nbytes, nbytes, pipesHijo);
+			comunicar(fname, i+1, i*nbytes, nbytes, pipesHijo);
 
 			return 0; 
 		}
