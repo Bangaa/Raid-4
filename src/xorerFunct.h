@@ -41,11 +41,11 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 
 /**
  * Rellena con ceros los espacios de la memoria no ocupados.
- * @param ptr Es el puntero al espacio de memoria que queremos blanquear
+ * @param ptr Es el puntero al espacio de memoria que queremos limpiar
  * @param wspaces Son los espacios que si estamos ocupando en bytes.
  * @param lenght Es el tamanio de la memoria en bytes
  */
-void blanquear(void* ptr, int wspaces, int lenght);
+void limpiar(void* ptr, int wspaces, int lenght);
 
 /**
  * Ejecuta la operacion binaria XOR. 

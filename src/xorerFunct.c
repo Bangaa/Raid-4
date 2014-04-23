@@ -48,20 +48,16 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 
 	while (bytes_left > 0)
 	{
+		int cuanto = (TASA > bytes_left ? bytes_left:TASA);
 		rdbytes_f = rdbytes_p = 0;
-		if (!feof(file_in)) // respaldo
-		{ 
-			if (bytes_left >= TASA)
-			{
-				rdbytes_f = fread(data_f, 1, TASA, file_in);
-			}
-			else if (bytes_left < TASA)
-			{
-				rdbytes_f = fread(data_f, 1, bytes_left, file_in);
-			}
 
-			int aux = fwrite(data_f, 1, rdbytes_f, file_out);
+		if (!feof(file_in))
+		{
+			rdbytes_f = fread(data_f, 1, cuanto, file_in);
 		}
+
+		limpiar(data_f, rdbytes_f, TASA);
+		fwrite(data_f, 1, cuanto, file_out); 
 
 		if (pipes->left_in != -1)
 		{
@@ -69,17 +65,16 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 			write(pipes->left_out, "1", 2);
 		}
 
-		blanquear(data_f, rdbytes_f, TASA);
-		blanquear(data_p, rdbytes_p, TASA);
+		limpiar(data_f, rdbytes_f, TASA);
+		limpiar(data_p, rdbytes_p, TASA);
 
 		xor_(data_f, data_p, TASA);
 
 		char trash[2];
-		int cuantos = (rdbytes_p >rdbytes_f ? rdbytes_p:rdbytes_f);
 
-		write(pipes->right_out, data_f, cuantos);
+		write(pipes->right_out, data_f, rdbytes_p);
 		
-		bytes_left -= cuantos;
+		bytes_left -= cuanto;
 
 		if(bytes_left<=0){//no espera confirmación al enviar el último pack de datos.
 			break;
@@ -111,11 +106,11 @@ void xor_(void* ptr1, void* ptr2, int lenght)
 	}
 }
 
-void blanquear(void* ptr, int wspaces, int lenght)
+void limpiar(void* ptr, int wspaces, int lenght)
 {
 	char* cpptr = ptr;
 
-	for (int i=wspaces+1; i<lenght; i++)
+	for (int i=wspaces; i<lenght; i++)
 	{
 		cpptr[i] = '\0';
 	}
