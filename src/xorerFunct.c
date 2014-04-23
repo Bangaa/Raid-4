@@ -62,17 +62,17 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 		if (pipes->left_in != -1)
 		{
 			rdbytes_p = read(pipes->left_in, data_p, TASA);
+
 			write(pipes->left_out, "1", 2);
 		}
 
-		limpiar(data_f, rdbytes_f, TASA);
 		limpiar(data_p, rdbytes_p, TASA);
 
 		xor_(data_f, data_p, TASA);
 
 		char trash[2];
 
-		write(pipes->right_out, data_f, rdbytes_p);
+		write(pipes->right_out, data_f, cuanto);
 		
 		bytes_left -= cuanto;
 
