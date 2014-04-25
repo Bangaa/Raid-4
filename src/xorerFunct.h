@@ -10,6 +10,20 @@ typedef struct
 }com_p; 
 
 /**
+ * Entrega el puntero al archivo \.part<i> del archivo original.
+ * @param fname Es el nombre del archivo original
+ * @param i Es el numero de parte
+ * @param modo Es el modo al cual se quiere abrir el archivo
+ */
+FILE* fopen_part(char fname[], int i, char* modo);
+
+/**
+ * Entrega el puntero al archivo XOR del archivo con el nombre fname.
+ * @param fname Es el nombre del archivo original
+ * @param modo Es el modo en el que se quiere abrir el archivo
+ */
+FILE* fopen_xor(char fname[], char * modo);
+/**
  * Funcion que genera un nueva estructura com_p que tendra encapsulados
  * los descriptores.
  * @param p_in_l Es el descriptor del pipe del cual leer los bytes del proceso
