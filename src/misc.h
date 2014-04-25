@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 /**
  * Funcion que transforma un entero de hasta 9 digitos en un string.
