@@ -14,7 +14,7 @@ en la carpeta "build/obj" y los ejecutables en la carpeta "build/".
 
 ## Ejecucion
 
-Para la ejecucion debe ejecutar el programa principal __`$ ./raid5`__ junto a las
+Para la ejecucion debe ejecutar el programa principal __`raid5`__ junto a las
 opciones __`--cut <input> N`__ si quiere cortar el archivo _input_ en _N_ partes, o con
 __`--join <archivo-original>`__ si quiere restaurar el archivo original.
 
@@ -25,6 +25,8 @@ Ejm:
 >
 > Si quiere volver volver a unir doc.pdf entonces:  
 > __`$ ./raid5 --join doc.pdf`__
+
+Debe estar en la carpeta "build/" para ejecutar el programa de la forma antes vista.
 
 El programa JOIN recuperara la parte faltante - si es que hubiera - y unira todas
 las partes para restaurar el programa original.
