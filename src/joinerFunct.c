@@ -174,7 +174,7 @@ int joinALL(char* fname,int n_partes, int endsize)
 	strcpy(faux_name,fname);
 	strcat(faux_name,".part");
 	for (int i = 0; i < n_partes; i++){
-		int end = 1;
+		int end = 0;
 		char* faux_name2 = (char*) malloc(strlen(fname)+10);
 		strcpy(faux_name2,faux_name);
 		char* strn = (char*)malloc(5*sizeof(char));
@@ -183,7 +183,7 @@ int joinALL(char* fname,int n_partes, int endsize)
 		printf("copiando desde %s\n",faux_name2);
 		//COPIAR DE filename.parti A file_out.
 		if(i==n_partes-1){//última parte
-			end = endsize+1;//cantidad de ceros + final de archivo.
+			end = endsize;//cantidad de ceros.
 		}
 		copiar_contenido(file_out, faux_name2,end);
 	}
