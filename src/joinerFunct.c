@@ -5,6 +5,37 @@
 #include "joinerFunct.h"
 #include "misc.h"
 
+int copiar_contenido(FILE* fout, char* fin_name, int endsize)
+{
+	FILE* file_in;
+	if((file_in = fopen(fin_name, "r")) == NULL){
+		printf("no se puede leer el archivo.\n");
+		return -1; //no se puede leer el archivo.
+	}
+	if(endsize<0){
+		printf("endsize negativo.\n");
+		return -1;
+	}
+	char* a = (char*)malloc(TASA*sizeof(char));
+	long cuantolee = TASA;
+	long bytesleft= fsof(file_in);
+	bytesleft-= endsize;
+	while(bytesleft>0){
+		cuantolee = fread(a,sizeof(char),TASA,file_in);
+		bytesleft -= cuantolee;
+		if(bytesleft<=0){// está leyendo la última porción de bytes.
+			int x= fwrite(a,sizeof(char),(cuantolee + bytesleft), fout);
+
+		}
+		else{
+			fwrite(a,sizeof(char),cuantolee, fout);
+		}
+
+	}
+	fclose(file_in);
+	return 0;
+}
+
 int missing(char fname[], int total)
 {
 	FILE * sfile;
@@ -127,5 +158,35 @@ int rebuild(char fname[], int i_faltante, int left_in, int left_out)
 	}
 	fclose(file_out); 
 
+	return 0;
+}
+
+int joinALL(char* fname,int n_partes, int endsize)
+{
+	//PREPARAR EL ARCHIVO DE SALIDA
+	FILE* file_out;	//< Archivo de salida.
+	if((file_out = fopen(fname, "w"))== NULL){
+		printf("NO SE PUEDE CREAR fichero\n");
+		return 1;		// No se puede crear fichero.
+	}
+
+	char* faux_name = (char*) malloc(strlen(fname)+10);//
+	strcpy(faux_name,fname);
+	strcat(faux_name,".part");
+	for (int i = 0; i < n_partes; i++){
+		int end = 1;
+		char* faux_name2 = (char*) malloc(strlen(fname)+10);
+		strcpy(faux_name2,faux_name);
+		char* strn = (char*)malloc(5*sizeof(char));
+		strn = inttostring(i+1);
+		strcat(faux_name2,strn);//filename.parti
+		printf("copiando desde %s\n",faux_name2);
+		//COPIAR DE filename.parti A file_out.
+		if(i==n_partes-1){//última parte
+			end = endsize+1;//cantidad de ceros + final de archivo.
+		}
+		copiar_contenido(file_out, faux_name2,end);
+	}
+	fclose(file_out);
 	return 0;
 }

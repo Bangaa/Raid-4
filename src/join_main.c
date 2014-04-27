@@ -46,6 +46,7 @@ int main (int argc, char* argv[])
 	}
 	else if (imissing > 0)	// reconstruccion de la parte faltante
 	{
+		printf("Reconstruyendo la parte que falta ........." );
 		int** pipes = (int**) malloc(sizeof(int*)*2*npartes);
 		int ok ;
 		int pid;
@@ -87,11 +88,10 @@ int main (int argc, char* argv[])
 				return 0; 
 			}
 		} 
-		printf("Reconstruyendo la parte que falta ........." );
 
 		ok = rebuild(argv[1], imissing, pipes[npartes*2-2][_RD], pipes[npartes*2-1][_WR]);
 
-		if (!ok)
+		if (ok == 0)
 		{
 			printf("Ok \n");
 		}
@@ -104,7 +104,17 @@ int main (int argc, char* argv[])
 	} 
 
 	// union de las partes
+	
+	int ok = joinALL(argv[1], npartes, bytes_sobrantes);
 
+	if (ok == 0)
+	{
+		printf("<%s> se ha reconstruido con exito\n", argv[1]);
+	}
+	else
+	{
+		printf("Fallo la reconstruccion \n");
+	} 
 
-	return 1; 
+	return 0; 
 }
