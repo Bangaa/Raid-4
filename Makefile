@@ -8,7 +8,8 @@ OBJDIR = build/obj
 VPATH = src:build/obj
 
 # Creacion del codigo objeto
-ALL: xorer joiner 
+ALL: main.o xorer joiner
+	$(CC) $< -o build/raid5
 
 $(OBJDIR)/misc.o: misc.c misc.h  | $(OBJDIR)
 	$(CC) -c $(FLAGS) $< -o $@
@@ -24,6 +25,11 @@ $(OBJDIR)/join_main.o: join_main.c joinerFunct.h xorerFunct.h misc.h | $(OBJDIR)
 
 $(OBJDIR)/cut_main.o: cut_main.c xorerFunct.h misc.h | $(OBJXOR)
 	$(CC) -c $(FLAGS) $< -o $@
+
+$(OBJDIR)/main.o: main.c | $(OBJDIR)
+	$(CC) -c $(FLAGS) $< -o $@
+
+# Creacion del directorio de salida en caso que no existiera
 
 $(OBJDIR):
 	mkdir -p build/obj
