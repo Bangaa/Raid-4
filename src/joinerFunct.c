@@ -180,12 +180,13 @@ int joinALL(char* fname,int n_partes, int endsize)
 		char* strn = (char*)malloc(5*sizeof(char));
 		strn = inttostring(i+1);
 		strcat(faux_name2,strn);//filename.parti
-		printf("copiando desde %s\n",faux_name2);
+		printf("Copiando desde %s\t\t\t",faux_name2);
 		//COPIAR DE filename.parti A file_out.
 		if(i==n_partes-1){//última parte
 			end = endsize;//cantidad de ceros.
 		}
-		copiar_contenido(file_out, faux_name2,end);
+		if (copiar_contenido(file_out, faux_name2,end) == 0)
+			printf("[Ok]\n");
 	}
 	fclose(file_out);
 	return 0;

@@ -53,12 +53,11 @@ int main(int argc, char **argv){
 		if(option_flag==1){
 			//LLAMAR JOINER
 			const char* program_name = "JOIN";
-			char** argv2 = (char**)malloc(3*sizeof(char*));
-			argv2[0] = (char*)malloc(2*sizeof(char));
-			strcpy(argv2[0],"a");
-			argv2[1] = (char*)malloc(strlen(filename)*sizeof(char));
+			char** argv2 = (char**)malloc(2*sizeof(char*));
+			argv2[0] = "JOIN";
+			argv2[1] = (char*)malloc(strlen(filename)*sizeof(char)+1);
 			strcpy(argv2[1],filename);
-			argv2[2] = NULL;
+
 			printf("Executing: JOIN\n");
 			execv(program_name,argv2);
 		}

@@ -46,10 +46,12 @@ int main (int argc, char* argv[])
 	}
 	else if (imissing > 0)	// reconstruccion de la parte faltante
 	{
-		printf("Reconstruyendo la parte que falta ........." );
 		int** pipes = (int**) malloc(sizeof(int*)*2*npartes);
 		int ok ;
-		int pid;
+		int pid = -1;
+
+		printf("Reconstruyendo la parte que falta \t\t\t");
+		fflush(NULL);
 
 		for (int i=0; i< (2*npartes); i++)
 		{
@@ -93,12 +95,12 @@ int main (int argc, char* argv[])
 
 		if (ok == 0)
 		{
-			printf("Ok \n");
+			printf("[Ok] \n");
 		}
 		else
 		{
-			printf("Failed \n");
-			printf("No se pudo reconstruir el archivo\n");
+			printf("[Failed] \n");
+			printf("No se pudo reconstruir el archivo. Abortado\n");
 			return 1;
 		}
 	} 
