@@ -1,26 +1,32 @@
 CC = gcc
 FLAGS = -std=c99
+
 OBJXOR= xorerFunct.o cut_main.o misc.o
 OBJJOIN= joinerFunct.o join_main.o xorerFunct.o misc.o
+
+OBJDIR = build/obj
 VPATH = src:build/obj
 
 # Creacion del codigo objeto
 ALL: xorer joiner 
 
-misc.o: misc.c misc.h
-	$(CC) -c $(FLAGS) $< -o build/obj/$@
+$(OBJDIR)/misc.o: misc.c misc.h  | $(OBJDIR)
+	$(CC) -c $(FLAGS) $< -o $@
 
-xorerFunct.o: xorerFunct.c xorerFunct.h misc.h
-	$(CC) -c $(FLAGS) $< -o build/obj/$@
+$(OBJDIR)/xorerFunct.o: xorerFunct.c xorerFunct.h misc.h | $(OBJDIR)
+	$(CC) -c $(FLAGS) $< -o $@
 
-joinerFunct.o: joinerFunct.c joinerFunct.h misc.h xorerFunct.h
-	$(CC) -c $(FLAGS) $< -o build/obj/$@
+$(OBJDIR)/joinerFunct.o: joinerFunct.c joinerFunct.h misc.h xorerFunct.h | $(OBJDIR)
+	$(CC) -c $(FLAGS) $< -o $@
 
-join_main.o: join_main.c joinerFunct.h xorerFunct.h misc.h
-	$(CC) -c $(FLAGS) $< -o build/obj/$@
+$(OBJDIR)/join_main.o: join_main.c joinerFunct.h xorerFunct.h misc.h | $(OBJDIR)
+	$(CC) -c $(FLAGS) $< -o $@
 
-cut_main.o: cut_main.c xorerFunct.h misc.h
-	$(CC) -c $(FLAGS) $< -o build/obj/$@
+$(OBJDIR)/cut_main.o: cut_main.c xorerFunct.h misc.h | $(OBJXOR)
+	$(CC) -c $(FLAGS) $< -o $@
+
+$(OBJDIR):
+	mkdir -p build/obj
 
 # Creacion del XORer
 
@@ -32,6 +38,7 @@ xorer: $(OBJXOR)
 joiner: $(OBJJOIN)
 	$(CC) $^ -o build/JOIN
 
+# Limpiar los objetos antiguos para empezar denuevo
 clean:
 	rm -f build/obj/*.o
 	rm -f build/CUT build/JOIN
