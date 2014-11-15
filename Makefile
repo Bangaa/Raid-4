@@ -6,11 +6,13 @@ OBJDIR = build/obj
 OBJXOR= $(addprefix $(OBJDIR)/, xorerFunct.o cut_main.o misc.o)
 OBJJOIN= $(addprefix $(OBJDIR)/, joinerFunct.o join_main.o xorerFunct.o misc.o)
 
+EXE = raid4
+
 VPATH = src/:build/obj/
 
 # Creacion del codigo objeto
 ALL: $(OBJDIR)/main.o xorer joiner | $(OBJDIR)
-	$(CC) $< -o build/raid5
+	$(CC) $< -o build/$(EXE)
 
 $(OBJDIR)/misc.o: misc.c misc.h  | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
