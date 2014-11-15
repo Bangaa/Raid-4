@@ -51,15 +51,15 @@ int missing(char fname[], int total)
 		{
 			i_faltante = i;
 			cuantas++;
-		} 
+		}
 
 		if (cuantas > 1)
 		{
-			return -1; 
-		} 
+			return -1;
+		}
 	}
 
-	return i_faltante; 
+	return i_faltante;
 }
 
 int recovery(char fname[], int n_proc, int i_faltante, com_p* pipes )
@@ -83,7 +83,7 @@ int recovery(char fname[], int n_proc, int i_faltante, com_p* pipes )
 		return 1;		// No hay espacio en memoria
 
 	if ((data_p = malloc(TASA)) == NULL)
-		return 1;		// No hay espacio en memoria 
+		return 1;		// No hay espacio en memoria
 
 	do
 	{
@@ -106,8 +106,8 @@ int recovery(char fname[], int n_proc, int i_faltante, com_p* pipes )
 		char trash[2];
 
 		write(pipes->right_out, data_f, hndata);
-		
-		if(feof(file_in)) 
+
+		if(feof(file_in))
 			break;
 
 		else
@@ -151,12 +151,12 @@ int rebuild(char fname[], int i_faltante, int left_in, int left_out)
 
 		rdbytes_p = read(left_in, data_p, TASA);
 		write(left_out, "1", 2);
-		
+
 		bytes_left-= rdbytes_p;
-		
-		fwrite(data_p, 1, rdbytes_p, file_out); 
+
+		fwrite(data_p, 1, rdbytes_p, file_out);
 	}
-	fclose(file_out); 
+	fclose(file_out);
 
 	return 0;
 }

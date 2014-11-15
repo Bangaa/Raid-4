@@ -81,9 +81,9 @@ int main(int argc, char **argv){
 				n = atoi(optarg);// n es el argumento de cut
 				if(n!=0){// es un número válido.
 					option_flag=1;
-					strcpy(strn,optarg);		
+					strcpy(strn,optarg);
 				}else{//no se puede interpretar como int o es 0.
-					argerror(argv[0]); 
+					argerror(argv[0]);
 				}
 			}
 			if(c == -1){//debiera ser el nombre del archivo a cortar
@@ -114,49 +114,5 @@ int main(int argc, char **argv){
 		}
 	}
 
-
-
-	/*
-	OLD VERSION
-	int c = 0;
-	int optind = 0;
-	static int option_flag;
-	int option_index = 0;
-	while(c != -1){
-		optind++;
-		printf("Empiezawhile: optind:%d\n",optind);
-		static struct option long_options[] = {
-			{"cut",  required_argument, &option_flag, 1},
-			{"join", required_argument, &option_flag, 2}
-		};
-		c = getopt_long(argc, argv, "", long_options, &option_index);
-		printf("switch_c:%d\n",c);
-		switch(c){
-
-			case 0:
-				printf("%s",long_options[option_index].name);
-				if(optarg){
-					printf(": %s\n", optarg);
-					optind++;
-				}else{
-					printf("\n");
-				}
-				printf("\noptind:%d\n",optind);
-				if(option_flag==1){
-					printf("LLAMEN AL XORER\n");
-				}
-				if (option_flag==2){
-					printf("LLAMEN AL JOINER\n");
-				}
-				printf("\noptind:%d\n",optind);
-				break;
-			default:
-				printf("SERA EL NOMBRE:%s\n",argv[optind]);
-				printf("optind:%d\n",optind);
-				printf("default:%s\n",argv[optind]);
-				printf("optind:%d\n",optind);
-		}
-	}
-	*/
 	return 0;
 }

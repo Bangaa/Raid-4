@@ -14,7 +14,7 @@ char * inttostring(int num)
 	sprintf(buff, "%i", num);
 	buff[9]='\0';
 
-	return buff; 
+	return buff;
 }
 
 long fsof(FILE * ptrFILE)
@@ -33,7 +33,7 @@ long fsof(FILE * ptrFILE)
 	size = ftell(ptrFILE);
 	fseek(ptrFILE, current, SEEK_SET);
 
-	return size; 
+	return size;
 }
 
 

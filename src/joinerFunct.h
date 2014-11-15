@@ -6,7 +6,7 @@
  *
  * @param fname Es el nombre del archivo original
  * @param total Es el numero total de partes en que fue cortado fname
- * @return El numero de la parte que falta, cero si no falta ninguna o 
+ * @return El numero de la parte que falta, cero si no falta ninguna o
  * -1 si falta mas de una parte.
  *
  *  - Ej. Si falta la parte 3 (<archivo>.part3) devuelve 3
@@ -41,14 +41,14 @@ int rebuild(char fname[], int i_faltante, int left_in, int left_out);
  * @param fname Es el nombre del archivo que se quiere restaurar.
  * @param n_partes Es el numero de partes que componen el archivo.
  * @param endsize cantidad de bytes que NO copiar, desde el final del archivo de entrada.
- * @return 0 si todo salio bien, -1 si no puede abrir un archivo. 
+ * @return 0 si todo salio bien, -1 si no puede abrir un archivo.
  */
 int joinALL(char* fname, int n_partes, int endsize);
 
 /**
  * Copia el contenido de un archivo a otro.
  * Excluye los últimos "endsize" bytes de la copia.
- * NOTA: fout debe estar abierto en modo escritura y el archivo 
+ * NOTA: fout debe estar abierto en modo escritura y el archivo
  * indicado por fin_name debe estar cerrado.
  * @param fout Es el nombre del archivo donde escribir.
  * @param fin_name Es el nombre del archivo a leer.

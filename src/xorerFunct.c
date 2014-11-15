@@ -18,7 +18,7 @@ FILE* fopen_xor(char fname[], char * modo)
 
 	free(xorname);
 
-	return file; 
+	return file;
 }
 
 FILE* fopen_part(char fname[], int i, char* modo)
@@ -29,14 +29,14 @@ FILE* fopen_part(char fname[], int i, char* modo)
 
 	strcpy(partname, fname);
 	strcat(partname, ".part");
-	strcat(partname, num); 
+	strcat(partname, num);
 
 	file = fopen(partname, modo);
 
 	free(partname);
 	free(num);
 
-	return file; 
+	return file;
 }
 
 com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r)
@@ -85,7 +85,7 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 		}
 
 		limpiar(data_f, rdbytes_f, TASA);
-		fwrite(data_f, 1, cuanto, file_out); 
+		fwrite(data_f, 1, cuanto, file_out);
 
 		if (pipes->left_in != -1)
 		{
@@ -100,7 +100,7 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 		char trash[2];
 
 		write(pipes->right_out, data_f, cuanto);
-		
+
 		bytes_left -= cuanto;
 
 		if(bytes_left<=0){//no espera confirmación al enviar el último pack de datos.
@@ -111,7 +111,7 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 			read(pipes->right_in, trash, 2);
 		}
 
-	} 
+	}
 
 	free(data_f);
 	free(data_p);
@@ -129,7 +129,7 @@ void xor_(void* ptr1, void* ptr2, int lenght)
 
 	for (int i=0; i < lenght; i++)
 	{
-		cpptr1[i] = cpptr1[i] ^ cpptr2[i]; 
+		cpptr1[i] = cpptr1[i] ^ cpptr2[i];
 	}
 }
 
@@ -161,10 +161,10 @@ int crear_xor(char fname[], long nbytes, int left_in, int left_out)
 
 		rdbytes_p = read(left_in, data_p, TASA);
 		write(left_out, "1", 2);
-		
+
 		bytes_left-= rdbytes_p;
-		
-		fwrite(data_p, 1, rdbytes_p, fout); 
+
+		fwrite(data_p, 1, rdbytes_p, fout);
 	}
 	fclose(fout);
 

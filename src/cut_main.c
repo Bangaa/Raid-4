@@ -42,7 +42,7 @@ int main (int argc, char* argv[])
 	{
 		printf("Error: No se encontro el archivo <%s>. Operacion abortada\n", argv[1]);
 		return 1;
-	} 
+	}
 
 	if ((nprocess==0) || fsize/nprocess == 0)
 	{
@@ -86,12 +86,12 @@ int main (int argc, char* argv[])
 
 			comunicar(argv[1], i+1, i*nbytes, nbytes, pipesHijo);
 
-			return 0; 
+			return 0;
 		}
 	}
 
 	// Ejecucion del padre
-	
+
 	int sobra = nbytes*nprocess - fsize ;
 	int ok;
 
@@ -101,7 +101,7 @@ int main (int argc, char* argv[])
 	fwrite((void*)&nprocess, sizeof(int), 1, ptrFile);
 	fwrite((void*)&sobra, sizeof(int), 1, ptrFile);
 	fclose(ptrFile);
-	
+
 	ok = crear_xor(argv[1], nbytes, pipes[nprocess*2-2][_RD], pipes[nprocess*2-1][_WR]);
 
 	if (ok==0)
@@ -111,7 +111,7 @@ int main (int argc, char* argv[])
 	else
 	{
 		printf("Error: La division no ha podido llevarse a cabo\n");
-	} 
+	}
 
 	return 0;
 }

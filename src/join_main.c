@@ -87,9 +87,9 @@ int main (int argc, char* argv[])
 
 				recovery(argv[1], i+1, imissing, pipesHijo);
 
-				return 0; 
+				return 0;
 			}
-		} 
+		}
 
 		ok = rebuild(argv[1], imissing, pipes[npartes*2-2][_RD], pipes[npartes*2-1][_WR]);
 
@@ -103,10 +103,10 @@ int main (int argc, char* argv[])
 			printf("No se pudo reconstruir el archivo. Abortado\n");
 			return 1;
 		}
-	} 
+	}
 
 	// union de las partes
-	
+
 	int ok = joinALL(argv[1], npartes, bytes_sobrantes);
 
 	if (ok == 0)
@@ -116,7 +116,7 @@ int main (int argc, char* argv[])
 	else
 	{
 		printf("Fallo la reconstruccion \n");
-	} 
+	}
 
-	return 0; 
+	return 0;
 }

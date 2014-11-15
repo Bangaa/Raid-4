@@ -7,7 +7,7 @@ typedef struct
 {
 	int left_in, left_out;		//< pipes hacia el proceso hermano izquierdo
 	int right_in, right_out;	//< pipes hacia el proceso hermano derecho
-}com_p; 
+}com_p;
 
 /**
  * Entrega el puntero al archivo \.part<i> del archivo original.
@@ -28,11 +28,11 @@ FILE* fopen_xor(char fname[], char * modo);
  * los descriptores.
  * @param p_in_l Es el descriptor del pipe del cual leer los bytes del proceso
  * 				hermano izquierdo.
- * @param p_out_l Es el descriptor del pipe en el cual se manda el mensaje de 
+ * @param p_out_l Es el descriptor del pipe en el cual se manda el mensaje de
  * 				confirmacion de lectura al proceso hermano izquierdo.
- * @param p_out_r Es el descriptor del pipe en el cual mandar los bytes al 
+ * @param p_out_r Es el descriptor del pipe en el cual mandar los bytes al
  * 				proceso hermano derecho.
- * @param p_in_r Es el descriptor del pipe en al cual recibir el mensaje de 
+ * @param p_in_r Es el descriptor del pipe en al cual recibir el mensaje de
  * 				confirmacion de lectura del proceso hermano derecho.
  */
 com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r);
@@ -40,7 +40,7 @@ com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r);
 /**
  * Comunica los bytes leidos entre procesos hermanos. Hace que el proceso lea
  * del archivo fname cada cierta tasa de bytes y se los pase al hermano para
- * que le aplique el XOR. Escribe ademas los bytes leidos en su archivo de 
+ * que le aplique el XOR. Escribe ademas los bytes leidos en su archivo de
  * respaldo, y dependiendo el numero del proceso va a escribir en un archivo de
  * tipo .part[nro_proceso] o en uno .XOR
  *
@@ -48,7 +48,7 @@ com_p* new_compipe(int p_in_l, int p_out_l, int p_out_r, int p_in_r);
  * @param n_proc Es el numero del proceso
  * @param r_from Indica desde donde leera el proceso
  * @param nbytes Indica la cantidad de bytes que debe leer
- * @param pipes Es el puntero a com_p de donde sacara los descriptores de los 
+ * @param pipes Es el puntero a com_p de donde sacara los descriptores de los
  * 			pipes que va a utilizar
  */
 int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes );
@@ -62,7 +62,7 @@ int comunicar(char fname[], int n_proc, long r_from, long nbytes, com_p* pipes )
 void limpiar(void* ptr, int wspaces, int lenght);
 
 /**
- * Ejecuta la operacion binaria XOR. 
+ * Ejecuta la operacion binaria XOR.
  * Hace un xor entre el contenido de dos bloques de memoria guardando el
  * resultado en el primer puntero - sobreescribe el primer puntero -. Hay
  * que tener en cuenta que los dos espacios de memoria deben ser del mismo
